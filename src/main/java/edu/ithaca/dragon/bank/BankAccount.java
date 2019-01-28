@@ -45,8 +45,7 @@ public class BankAccount {
     public static boolean isEmailValid(String email) {
         if (email.length() == 0) return false;
         if (email.indexOf('@') == -1) return false;
-//        Pattern pattern = Pattern.compile("\\w+@{1}\\w+.\\w+");
-//        return pattern.matcher(email).matches();
-        return true;
+        Pattern pattern = Pattern.compile("\\w+@{1}\\w+.\\w+");
+        return pattern.matcher(email).matches();
     }
 }
