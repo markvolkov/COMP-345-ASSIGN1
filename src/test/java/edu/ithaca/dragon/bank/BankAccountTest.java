@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountTest {
 
     @Test
-    void getBalanceTest() {
+    void getBalanceTest() throws InsufficientFundsException {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         assertEquals(200, bankAccount.getBalance());
@@ -24,9 +24,9 @@ class BankAccountTest {
     @Test
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertTrue(BankAccount.isEmailValid( "a@@b.com"));
-        assertTrue(BankAccount.isEmailValid("@.@.@"));
-        assertTrue(BankAccount.isEmailValid("@.com"));
+        assertFalse(BankAccount.isEmailValid( "a@@b.com"));
+        assertFalse(BankAccount.isEmailValid("@.@.@"));
+        assertFalse(BankAccount.isEmailValid("@.com"));
         assertFalse(BankAccount.isEmailValid(""));
     }
 
@@ -37,7 +37,10 @@ class BankAccountTest {
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
+        //Invalid Email
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        //Invalid Balance
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("valid@valid.com", -100));
     }
 
 }
